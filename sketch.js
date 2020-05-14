@@ -2,10 +2,12 @@ var words=[];
 var definitions=[];
 var rand;
 var box1;
+var random1;
 var box2;
 var box3;
 var box4;
 var box5;
+var button;
 var randomNumber,number;
 var gameState="start";
 var num1=0;
@@ -36,7 +38,7 @@ function setup() {
   box2=createSprite(970,700,40,40);
   box3=createSprite(1070,700,40,40);
   box4=createSprite(1170,700,40,40);
-  box5=createSprite(1270,700,40,40);
+  box5=createSprite(1270,700,40,40);                                                          
   correct=createSprite(750,550,20,20);
   correct.addImage(correctImage);
   wrong=createSprite(750,550,20,20);
@@ -45,7 +47,6 @@ function setup() {
   wrong.scale=0.1;
   correct.visible=false;
   wrong.visible=false;
-  
 }
 
 function draw() {
@@ -78,8 +79,23 @@ function draw() {
     num2=randomNumber[2];
     num3=randomNumber[3];
     num4=randomNumber[4];
-
-
+   
+    if(num0!==rand&&num1!==rand&&num2!==rand&num3!==rand&&num4!==rand){
+      random1=Math.round(random(0,4));
+      switch(random1){
+        case 0: num0=rand;
+        break;
+        case 1:num1=rand;
+        break;
+        case 2: num2=rand;
+        break;
+        case 3: num3=rand;
+        break;
+        case 4: num4=rand;
+        break;
+      }
+    }
+   
     gameState="play";
   }
   
@@ -94,27 +110,28 @@ function draw() {
   text("D.",770,475);
   text("E.",770,575);
   fill("red");
-  text(definitions[randomNumber[0]],770,200);
+  text(definitions[num0],770,200);
   fill("green");
-  text(definitions[randomNumber[1]],770,300);
+  text(definitions[num1],770,300);
   fill("blue");
-  text(definitions[randomNumber[2]],770,400);
-  fill("yellow");
-  text(definitions[randomNumber[3]],770,500);
+  text(definitions[num2],770,400);
+  fill(0);
+  text(definitions[num3],770,500);
   fill("orange");
-  text(definitions[randomNumber[4]],770,600);
+  text(definitions[num4],770,600);
+  if(gameState==="play"){
   if (mousePressedOver(box1)){
     if(num0===rand){
       text("correct",970,900);
       box1.shapeColor="green";
-      gameState="start";
+      gameState="over";
       correct.visible=true;
       score=score+1;
     }
     else{
       text("wrong",970,900);
       box1.shapeColor="red";
-      gameState="start";
+      gameState="over";
       wrong.visible=true;
     }
   } 
@@ -122,14 +139,14 @@ function draw() {
     if(num1===rand){
       text("correct",970,900);
       box2.shapeColor="green";
-      gameState="start";
+      gameState="over";
       correct.visible=true;
       score=score+1;
     }
     else{
       text("wrong",970,900);
       box2.shapeColor="red";
-      gameState="start";
+      gameState="over";
       wrong.visible=true;
     }
   }
@@ -137,14 +154,14 @@ function draw() {
     if(num2===rand){
       text("correct",970,900);
       box3.shapeColor="green";
-      gameState="start";
+      gameState="over";
       correct.visible=true;
       score=score+1;
     }
     else{
       text("wrong",970,900);
       box3.shapeColor="red";
-      gameState="start";
+      gameState="over";
       wrong.visible=true;
     }
   }
@@ -152,14 +169,14 @@ function draw() {
     if(num3===rand){
       text("correct",970,900);
       box4.shapeColor="green";
-      gameState="start";
+      gameState="over";
       correct.visible=true;
       score=score+1;
     }
     else{
       text("wrong",970,900);
       box4.shapeColor="red";
-      gameState="start";
+      gameState="over";
       wrong.visible=true;
     }
   }
@@ -167,16 +184,24 @@ function draw() {
     if(num4===rand){
       text("correct",970,900);
       box5.shapeColor="green";
-      gameState="start";
+      gameState="over";
       correct.visible=true;
       score=score+1;
     }
     else{
       text("wrong",970,900);
       box5.shapeColor="red";
-      gameState="start";
+      gameState="over";
       wrong.visible=true;
     }
+  }
+}
+  if (gameState==="over"){
+    button=createButton('next');
+    button.position(1300,160);
+    button.mousePressed(function(){
+      gameState="start";
+    })
   }
 
   drawSprites();
